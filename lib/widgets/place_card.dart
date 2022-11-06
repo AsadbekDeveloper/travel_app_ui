@@ -10,6 +10,8 @@ class PlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     bool isGreen = index % 2 == 1;
     return GestureDetector(
       onTap: () {
@@ -50,10 +52,10 @@ class PlaceCard extends StatelessWidget {
             Stack(
               children: [
                 SizedBox(
-                  height: 350,
+                  height: size.height * 3 / 7,
                   width: double.infinity,
                   child: Hero(
-                    tag: 'image${index}',
+                    tag: 'image$index',
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -83,13 +85,11 @@ class PlaceCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     placesList[index].name,
                     style: mainHeader,
-                  ),
-                  const SizedBox(
-                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

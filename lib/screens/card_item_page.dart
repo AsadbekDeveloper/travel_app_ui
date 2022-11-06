@@ -19,10 +19,10 @@ class CardItemPage extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Container(
+                  SizedBox(
                     height: size.height * 2 / 3,
                     child: Hero(
-                      tag: 'image${index}',
+                      tag: 'image$index',
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                           bottomRight: Radius.circular(80),

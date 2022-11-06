@@ -24,7 +24,7 @@ class BottomNavBar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: const [
-                  FaIcon(FontAwesomeIcons.homeAlt),
+                  FaIcon(FontAwesomeIcons.house),
                   FaIcon(FontAwesomeIcons.map),
                 ],
               ),
@@ -41,7 +41,7 @@ class BottomNavBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: const [
                   FaIcon(FontAwesomeIcons.heart),
-                  FaIcon(FontAwesomeIcons.search),
+                  FaIcon(FontAwesomeIcons.magnifyingGlass),
                 ],
               ),
             ),

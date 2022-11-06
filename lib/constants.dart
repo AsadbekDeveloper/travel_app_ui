@@ -43,8 +43,8 @@ var placesList = [
 ];
 
 class Place {
-  final name;
-  final location;
+  final String name;
+  final String location;
 
-  Place({this.name, this.location});
+  Place({required this.name, required this.location});
 }
