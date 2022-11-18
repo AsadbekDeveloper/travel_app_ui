@@ -12,11 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: mainAccent),
-          scaffoldBackgroundColor: bgWhite,
-        ),
-        home: const HomePage());
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: mainAccent),
+        scaffoldBackgroundColor: bgWhite,
+      ),
+      home: const HomePage(),
+    );
   }
 }
