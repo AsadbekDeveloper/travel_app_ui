@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_app_ui/providers/city_model.dart';
+import 'package:travel_app_ui/providers/data_provider.dart';
 import '../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -10,6 +13,8 @@ class PlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final city =
+        Provider.of<DataProvider>(context, listen: false).getCityByIndex(index);
     final size = MediaQuery.of(context).size;
 
     bool isGreen = index % 2 == 1;
@@ -55,7 +60,7 @@ class PlaceCard extends StatelessWidget {
                   height: size.height * 3 / 7,
                   width: double.infinity,
                   child: Hero(
-                    tag: 'image$index',
+                    tag: city.name,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -63,7 +68,8 @@ class PlaceCard extends StatelessWidget {
                         bottomLeft: Radius.circular(70),
                         bottomRight: Radius.circular(15),
                       ),
-                      child: Image.asset('assets/ (${index + 1}).jpg',
+                      child: Image.asset(
+                          'assets/${city.type}/${city.image}.jpg',
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -88,7 +94,7 @@ class PlaceCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    placesList[index].name,
+                    city.name,
                     style: mainHeader,
                   ),
                   Row(
@@ -102,7 +108,7 @@ class PlaceCard extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        placesList[index].location,
+                        city.region,
                         style: bodyDark,
                       ),
                     ],

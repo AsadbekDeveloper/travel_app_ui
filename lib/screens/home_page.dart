@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_app_ui/providers/data_provider.dart';
 import '../constants.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/category_item.dart';
@@ -16,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   var selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
+    final cities = Provider.of<DataProvider>(context).cities;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       extendBody: true,
@@ -48,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Discover new places',
+              'O\'zbekistonni bilib oling!',
               style: mainHeader,
             ),
             SizedBox(
@@ -71,8 +74,8 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                   clipBehavior: Clip.antiAlias,
                   scrollDirection: Axis.horizontal,
-                  itemCount: placesList.length,
-                  itemBuilder: ((context, index) => PlaceCard(index: index))),
+                  itemCount: cities.length,
+                  itemBuilder: (context, index) => PlaceCard(index: index)),
             )
           ],
         ),
@@ -92,7 +95,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       drawer: const Drawer(
         child: Center(
-          child: Text('Hello'),
+          child: Text('Salom'),
         ),
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:travel_app_ui/providers/data_provider.dart';
 import '../constants.dart';
 
 class CardItemPage extends StatelessWidget {
@@ -9,6 +11,7 @@ class CardItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final city = Provider.of<DataProvider>(context).getCityByIndex(index);
     bool isGreen = index % 2 == 1;
 
     return Scaffold(
@@ -22,12 +25,13 @@ class CardItemPage extends StatelessWidget {
                   SizedBox(
                     height: size.height * 2 / 3,
                     child: Hero(
-                      tag: 'image$index',
+                      tag: city.name,
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                           bottomRight: Radius.circular(80),
                         ),
-                        child: Image.asset('assets/ (${index + 1}).jpg',
+                        child: Image.asset(
+                            'assets/${city.type}/${city.image}.jpg',
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -55,7 +59,7 @@ class CardItemPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      placesList[index].name,
+                      city.name,
                       style: mainHeader,
                     ),
                     Padding(
@@ -70,14 +74,15 @@ class CardItemPage extends StatelessWidget {
                             width: 10,
                           ),
                           Text(
-                            placesList[index].location,
+                            city.region,
                             style: bodyDark,
                           ),
                         ],
                       ),
                     ),
                     Text(
-                      Faker().lorem.sentences(30).toString(),
+                      city.description,
+                      style: descText,
                     ),
                   ],
                 ),

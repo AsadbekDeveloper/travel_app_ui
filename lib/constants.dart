@@ -8,43 +8,12 @@ const cardBlue = Color.fromARGB(255, 177, 208, 229);
 const bgWhite = Color.fromARGB(255, 219, 226, 230);
 
 final mainHeader = GoogleFonts.bodoniModa(fontSize: 26);
-final bodyDark = GoogleFonts.roboto(fontSize: 16, color: mainAccent);
-final bodyWhite = GoogleFonts.roboto(fontSize: 16, color: mainWhite);
+final bodyDark = TextStyle(fontSize: 16, color: mainAccent);
+final descText = TextStyle(fontSize: 16, color: mainAccent);
+final bodyWhite = TextStyle(fontSize: 16, color: mainWhite);
 
 const categoryList = [
-  'Suggested',
-  'Touristic',
-  'Authentic',
-  'Arctic',
-  'Tropic'
+  'Shaharlar',
+  'Viloyatlar',
+  'Regionlar',
 ];
-
-var placesList = [
-  Place(
-    name: 'Mykines Island',
-    location: 'Faroe islands',
-  ),
-  Place(
-    name: 'Bora Bora',
-    location: 'French Polynesia',
-  ),
-  Place(
-    name: 'Machu Picchu',
-    location: 'Peru',
-  ),
-  Place(
-    name: 'Great Barrier Reef',
-    location: 'Australia',
-  ),
-  Place(
-    name: 'Calton Hill',
-    location: 'Scotland',
-  ),
-];
-
-class Place {
-  final String name;
-  final String location;
-
-  Place({required this.name, required this.location});
-}
