@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_app_ui/providers/data_provider.dart';
 import 'constants.dart';
-import './screens/home_page.dart';
+import 'screens/main_scaffold.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
         scaffoldBackgroundColor: bgWhite,
         fontFamily: GoogleFonts.montserrat().fontFamily,
       ),
-      home: const HomePage(),
+      home: const MainScaffold(),
     );
   }
 }

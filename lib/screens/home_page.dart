@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_app_ui/providers/data_provider.dart';
 import '../constants.dart';
-import '../widgets/bottom_navbar.dart';
+import '../providers/data_provider.dart';
 import '../widgets/category_item.dart';
 import '../widgets/place_card.dart';
 
@@ -15,88 +13,53 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var selectedIndex = 1;
+  int selectedIndex = 1;
+
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<DataProvider>(context).getDataByIndex(selectedIndex);
+    final data =
+        Provider.of<DataProvider>(context).getDataByIndex(selectedIndex);
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      extendBody: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const FaIcon(
-              FontAwesomeIcons.barsStaggered,
-              color: mainAccent,
-            ),
-            onPressed: () => Scaffold.of(context).openDrawer(),
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'O\'zbekistonni bilib oling!',
+            style: mainHeader,
           ),
-        ),
-        toolbarHeight: 80,
-        elevation: 0,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(20.0),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage('https://i.pravatar.cc/60?img=8'),
-              radius: 20,
+          SizedBox(
+            height: 60,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: categoryList.length,
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: (() => setState(() {
+                      selectedIndex = index;
+                    })),
+                child: CategoryItem(
+                    title: categoryList[index],
+                    isSelected: index == selectedIndex),
+              ),
             ),
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'O\'zbekistonni bilib oling!',
-              style: mainHeader,
-            ),
-            SizedBox(
-              height: 60,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 80),
               child: ListView.builder(
+                clipBehavior: Clip.antiAlias,
                 scrollDirection: Axis.horizontal,
-                itemCount: categoryList.length,
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: (() => setState(() {
-                        selectedIndex = index;
-                      })),
-                  child: CategoryItem(
-                      title: categoryList[index],
-                      isSelected: index == selectedIndex),
+                itemCount: data.length,
+                itemBuilder: (context, index) => PlaceCard(
+                  index: index,
+                  type: data[index].type,
                 ),
               ),
             ),
-            SizedBox(
-              height: size.height * 3 / 5,
-              child: ListView.builder(
-                  clipBehavior: Clip.antiAlias,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) => PlaceCard(index: index, type: data[index].type,)),
-            )
-          ],
-        ),
-      ),
-      bottomNavigationBar: const BottomNavBar(),
-      floatingActionButton: SizedBox(
-        height: 80,
-        width: 80,
-        child: FloatingActionButton(
-          child: const FaIcon(
-            FontAwesomeIcons.plus,
-            size: 40,
-          ),
-          onPressed: () {},
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      drawer: const Drawer(
-        child: Center(
-          child: Text('Salom'),
-        ),
+          )
+        ],
       ),
     );
   }

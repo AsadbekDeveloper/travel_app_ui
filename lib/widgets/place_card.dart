@@ -5,7 +5,7 @@ import 'package:travel_app_ui/providers/data_provider.dart';
 import '../constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../screens/card_item_page.dart';
+import '../screens/item_page.dart';
 
 class PlaceCard extends StatelessWidget {
   final int index;
@@ -67,41 +67,48 @@ class PlaceCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Stack(
-              children: [
-                SizedBox(
-                  height: size.height * 3 / 7,
-                  width: double.infinity,
-                  child: Hero(
-                    tag: data.name,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15),
-                        bottomLeft: Radius.circular(70),
-                        bottomRight: Radius.circular(15),
+            Expanded(
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: double.infinity,
+                    width: double.infinity,
+                    child: Hero(
+                      tag: data.name,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(70),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        child: Image.asset('assets/${data.image}.jpg',
+                            fit: BoxFit.cover),
                       ),
-                      child: Image.asset('assets/${data.image}.jpg',
-                          fit: BoxFit.cover),
                     ),
                   ),
-                ),
-                Positioned(
-                  right: 10,
-                  top: 10,
-                  child: CircleAvatar(
-                    backgroundColor: mainAccent.withAlpha(50),
-                    radius: 20,
-                    child: const FaIcon(
-                      FontAwesomeIcons.heart,
-                      color: mainWhite,
+                  Positioned(
+                    right: 10,
+                    top: 10,
+                    child: CircleAvatar(
+                      backgroundColor: mainAccent.withAlpha(50),
+                      radius: 20,
+                      child: const FaIcon(
+                        FontAwesomeIcons.heart,
+                        color: mainWhite,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(
+                left: 10,
+                right: 10,
+                bottom: 20,
+                top: 10,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -111,21 +118,25 @@ class PlaceCard extends StatelessWidget {
                       style: mainHeader,
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const FaIcon(
-                        FontAwesomeIcons.mapLocation,
-                        color: mainAccent,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        desc,
-                        style: bodyDark,
-                      ),
-                    ],
+                  FittedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        type == dataTypes.city
+                            ? const FaIcon(
+                                FontAwesomeIcons.mapLocation,
+                                color: mainAccent,
+                              )
+                            : SizedBox.shrink(),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          desc,
+                          style: bodyDark,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
