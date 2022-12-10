@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<DataProvider>(context, listen: false).initializeCities();
+      Provider.of<DataProvider>(context, listen: false).initializeData();
     });
   }
 

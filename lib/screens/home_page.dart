@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   var selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
-    final cities = Provider.of<DataProvider>(context).cities;
+    final data = Provider.of<DataProvider>(context).getDataByIndex(selectedIndex);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       extendBody: true,
@@ -74,8 +74,8 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                   clipBehavior: Clip.antiAlias,
                   scrollDirection: Axis.horizontal,
-                  itemCount: cities.length,
-                  itemBuilder: (context, index) => PlaceCard(index: index)),
+                  itemCount: data.length,
+                  itemBuilder: (context, index) => PlaceCard(index: index, type: data[index].type,)),
             )
           ],
         ),

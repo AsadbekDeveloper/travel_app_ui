@@ -7,11 +7,26 @@ import '../constants.dart';
 
 class CardItemPage extends StatelessWidget {
   final int index;
-  const CardItemPage({super.key, required this.index});
+  final dataTypes type;
+  const CardItemPage({
+    super.key,
+    required this.index,
+    required this.type,
+  });
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final city = Provider.of<DataProvider>(context).getCityByIndex(index);
+    late final data;
+    late final String desc;
+    if (type == dataTypes.city) {
+      data = Provider.of<DataProvider>(context, listen: false)
+          .getCityByIndex(index);
+      desc = data.region;
+    } else {
+      data = Provider.of<DataProvider>(context, listen: false)
+          .getHolidayByIndex(index);
+      desc = data.date;
+    }
     bool isGreen = index % 2 == 1;
 
     return Scaffold(
@@ -25,13 +40,12 @@ class CardItemPage extends StatelessWidget {
                   SizedBox(
                     height: size.height * 2 / 3,
                     child: Hero(
-                      tag: city.name,
+                      tag: data.name,
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                           bottomRight: Radius.circular(80),
                         ),
-                        child: Image.asset(
-                            'assets/${city.type}/${city.image}.jpg',
+                        child: Image.asset('assets/${data.image}.jpg',
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -42,7 +56,7 @@ class CardItemPage extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => Navigator.pop(context),
                       child: CircleAvatar(
-                        backgroundColor: mainWhite.withAlpha(30),
+                        backgroundColor: mainAccent.withAlpha(50),
                         radius: 20,
                         child: const FaIcon(
                           FontAwesomeIcons.arrowLeft,
@@ -59,7 +73,7 @@ class CardItemPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      city.name,
+                      data.name,
                       style: mainHeader,
                     ),
                     Padding(
@@ -74,14 +88,14 @@ class CardItemPage extends StatelessWidget {
                             width: 10,
                           ),
                           Text(
-                            city.region,
+                            desc,
                             style: bodyDark,
                           ),
                         ],
                       ),
                     ),
                     Text(
-                      city.description,
+                      data.description,
                       style: descText,
                     ),
                   ],

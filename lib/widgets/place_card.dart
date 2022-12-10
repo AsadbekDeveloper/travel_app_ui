@@ -9,12 +9,22 @@ import '../screens/card_item_page.dart';
 
 class PlaceCard extends StatelessWidget {
   final int index;
-  const PlaceCard({super.key, required this.index});
+  final dataTypes type;
+  const PlaceCard({super.key, required this.index, required this.type});
 
   @override
   Widget build(BuildContext context) {
-    final city =
-        Provider.of<DataProvider>(context, listen: false).getCityByIndex(index);
+    late final data;
+    late final String desc;
+    if (type == dataTypes.city) {
+      data = Provider.of<DataProvider>(context, listen: false)
+          .getCityByIndex(index);
+      desc = data.region;
+    } else {
+      data = Provider.of<DataProvider>(context, listen: false)
+          .getHolidayByIndex(index);
+      desc = data.date;
+    }
     final size = MediaQuery.of(context).size;
 
     bool isGreen = index % 2 == 1;
@@ -23,7 +33,10 @@ class PlaceCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: ((context) => CardItemPage(index: index)),
+            builder: ((context) => CardItemPage(
+                  index: index,
+                  type: data.type,
+                )),
           ),
         );
       },
@@ -32,7 +45,7 @@ class PlaceCard extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: isGreen ? cardGreen : cardBlue,
+          color: colors[index % 5],
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
@@ -60,7 +73,7 @@ class PlaceCard extends StatelessWidget {
                   height: size.height * 3 / 7,
                   width: double.infinity,
                   child: Hero(
-                    tag: city.name,
+                    tag: data.name,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(15),
@@ -68,8 +81,7 @@ class PlaceCard extends StatelessWidget {
                         bottomLeft: Radius.circular(70),
                         bottomRight: Radius.circular(15),
                       ),
-                      child: Image.asset(
-                          'assets/${city.type}/${city.image}.jpg',
+                      child: Image.asset('assets/${data.image}.jpg',
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -78,7 +90,7 @@ class PlaceCard extends StatelessWidget {
                   right: 10,
                   top: 10,
                   child: CircleAvatar(
-                    backgroundColor: mainWhite.withAlpha(30),
+                    backgroundColor: mainAccent.withAlpha(50),
                     radius: 20,
                     child: const FaIcon(
                       FontAwesomeIcons.heart,
@@ -93,9 +105,11 @@ class PlaceCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    city.name,
-                    style: mainHeader,
+                  FittedBox(
+                    child: Text(
+                      data.name,
+                      style: mainHeader,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -108,7 +122,7 @@ class PlaceCard extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        city.region,
+                        desc,
                         style: bodyDark,
                       ),
                     ],
